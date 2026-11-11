@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechVision Store | Tehnologija na jednom mestu</title>
+<style>
+:root{--navy:#101b35;--blue:#1769ff;--cyan:#25c5e8;--bg:#f4f7fb;--ink:#172033;--muted:#68748a;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--navy);color:white;position:sticky;top:0;z-index:5;box-shadow:0 3px 16px #0b163322}
+.nav{max-width:1150px;margin:auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.logo{font-size:22px;font-weight:800;letter-spacing:.3px}.logo span{color:var(--cyan)}
+nav{display:flex;gap:18px;align-items:center;flex-wrap:wrap}nav a{color:#eaf1ff;text-decoration:none;font-size:14px}
+.cart{background:var(--blue);border:0;color:white;padding:10px 15px;border-radius:10px;font-weight:700;cursor:pointer}
+.hero{background:linear-gradient(120deg,#101b35,#173d7c 65%,#087fa8);color:white;padding:66px 22px}
+.hero-inner{max-width:1100px;margin:auto;display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}
+.eyebrow{color:#8ce8ff;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-size:12px}
+h1{font-size:clamp(34px,5vw,56px);line-height:1.06;margin:13px 0}.hero p{color:#dbe7ff;line-height:1.7;max-width:580px}
+.hero-art{background:#ffffff16;border:1px solid #ffffff35;border-radius:24px;padding:26px;text-align:center;font-size:100px}
+.primary{display:inline-block;margin-top:12px;background:var(--cyan);color:#06213a;text-decoration:none;padding:13px 20px;border-radius:10px;font-weight:800}
+.wrap{max-width:1100px;margin:38px auto;padding:0 22px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+h2{font-size:28px;margin:0 0 8px}.muted{color:var(--muted);margin:0}
+.search{width:min(320px,100%);padding:12px 14px;border:1px solid #d7deea;border-radius:10px;font-size:15px}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.filter{border:1px solid #d7deea;background:white;padding:9px 14px;border-radius:20px;cursor:pointer;color:var(--ink)}.filter.active{background:var(--navy);color:white;border-color:var(--navy)}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.product{background:white;border:1px solid #e6ebf2;border-radius:17px;overflow:hidden;box-shadow:0 5px 18px #10203b0a;display:flex;flex-direction:column}
+.product-img{height:155px;background:linear-gradient(135deg,#e8f1ff,#f5faff);display:grid;place-items:center;overflow:hidden;}
+.product-img img{width:100%;height:100%;object-fit:cover;}
+.product-body{padding:16px;display:flex;flex-direction:column;flex:1}
+.tag{font-size:11px;color:var(--blue);font-weight:800;text-transform:uppercase}
+.product h3{font-size:16px;margin:8px 0}.desc{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}
+.price{font-size:19px;font-weight:800;margin:12px 0}.add{margin-top:auto;border:0;background:var(--blue);color:white;border-radius:9px;padding:11px;cursor:pointer;font-weight:700}.add:hover,.cart:hover{filter:brightness(1.08)}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:35px}.info-card{background:white;border:1px solid #e6ebf2;border-radius:14px;padding:20px}.info-card b{display:block;margin:8px 0}.info-card p{color:var(--muted);font-size:13px;line-height:1.5;margin:0}
+footer{background:var(--navy);color:#dbe7ff;margin-top:55px;padding:28px 22px;text-align:center;font-size:13px}
+.overlay{position:fixed;inset:0;background:#07122588;z-index:10;display:none;align-items:center;justify-content:center;padding:18px}.panel{background:white;width:min(480px,100%);max-height:85vh;overflow:auto;border-radius:18px;padding:22px}.panel-top{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#edf2f8;border-radius:8px;padding:8px 11px;cursor:pointer}.cart-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #edf0f5}.qty button{border:1px solid #d7deea;background:white;border-radius:6px;padding:3px 8px;cursor:pointer}.total{font-weight:800;font-size:20px;text-align:right;margin:18px 0}.checkout{width:100%;background:var(--blue);color:white;border:0;border-radius:10px;padding:13px;font-weight:800;cursor:pointer}.note{background:#fff7df;color:#72510a;padding:11px;border-radius:9px;font-size:12px;line-height:1.5;margin-top:12px}
+@media(max-width:850px){.products{grid-template-columns:repeat(2,1fr)}.hero-inner{grid-template-columns:1fr}.hero-art{font-size:75px}.info{grid-template-columns:1fr}}
+@media(max-width:480px){.products{grid-template-columns:1fr}.nav{justify-content:center}.hero{padding:48px 18px}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+<div class="logo">TechVision <span>Store</span></div>
+<nav><a href="#pocetna">Početna</a><a href="#proizvodi">Proizvodi</a><a href="#prednosti">O nama</a></nav>
+<button class="cart" onclick="openCart()">🛒 Korpa (<span id="cartCount">0</span>)</button>
+</div></header>
+<section class="hero" id="pocetna"><div class="hero-inner">
+<div><div class="eyebrow">Tehnologija na jednom mestu</div><h1>Pronađi opremu za svoje ideje.</h1>
+<p>Dobro došao u TechVision Store – demonstracionu internet prodavnicu računara, telefona i dodatne opreme. Istraži ponudu i isprobaj korpu.</p>
+<a class="primary" href="#proizvodi">Pogledaj proizvode ↓</a></div>
+<div class="hero-art">💻📱</div>
+</div></section>
+<main class="wrap" id="proizvodi">
+<div class="section-head"><div><h2>Izdvojeni proizvodi</h2><p class="muted">Izaberi kategoriju ili pronađi proizvod pretragom.</p></div>
+<input class="search" id="search" placeholder="Pretraži proizvode..." oninput="renderProducts()"></div>
+<div class="filters" id="filters"></div><div class="products" id="products"></div>
+<section class="info" id="prednosti">
+<div class="info-card"><div>🚚</div><b>Jednostavna kupovina</b><p>Pregledaj proizvode i dodaj ih u korpu u nekoliko klikova.</p></div>
+<div class="info-card"><div>🛡️</div><b>Demo prodavnica</b><p>Ovo je školski/projektni primer, bez stvarne naplate i slanja robe.</p></div>
+<div class="info-card"><div>💬</div><b>Podrška</b><p>Ovde kasnije možeš dodati kontakt formu i podatke prodavnice.</p></div>
+</section>
+</main>
+<footer>© 2026 TechVision Store · Demo internet prodavnica · Nije omogućena stvarna kupovina.</footer>
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeCart()"><div class="panel">
+<div class="panel-top"><h2>🛒 Tvoja korpa</h2><button class="close" onclick="closeCart()">Zatvori ✕</button></div>
+<div id="cartItems"></div><div class="total" id="total">Ukupno: 0 RSD</div>
+<button class="checkout" onclick="demoOrder()">Isprobaj naručivanje</button>
+<div class="note">Demo prikaz: dugme ne šalje porudžbinu, ne traži lične podatke i ne vrši plaćanje.</div>
+</div></div>
+<script>
+const items=[
+{id:1,name:"Laptop Dell Inspiron",category:"Laptopovi",price:94990,image:"https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&q=80",desc:"Pouzdan Dell laptop za rad i multimediju."},
+{id:2,name:"iPhone 18 Pro",category:"Telefoni",price:169990,image:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80",desc:"Najnoviji iPhone sa naprednim performansama i kamerom."},
+{id:3,name:"Monitor Vision 24",category:"Monitori",price:21990,image:"https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80",desc:"Full HD monitor za rad i zabavu."},
+{id:4,name:"Mehanička tastatura",category:"Oprema",price:6990,image:"https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80",desc:"Tastatura za udobno i precizno kucanje."},
+{id:5,name:"Bežični miš",category:"Oprema",price:2490,image:"https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&q=80",desc:"Precizan bežični miš za svaki dan."},
+{id:6,name:"JBL Slušalice Tune",category:"Oprema",price:7990,image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80",desc:"Originalne JBL bežične slušalice sa snažnim basom."},
+{id:7,name:"Gejming računar",category:"Računari",price:129990,image:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=500&q=80",desc:"Stoni gejming računar za zahtevnije zadatke i igre."},
+{id:8,name:"Tablet ViewTab",category:"Telefoni",price:32990,image:"https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&q=80",desc:"Praktičan tablet za čitanje, učenje i zabavu."}
+];
+let cart={};let category="Sve";
+const cats=["Sve",...new Set(items.map(x=>x.category))];
+function money(n){return n.toLocaleString("sr-RS")+" RSD"}
+function renderFilters(){document.getElementById("filters").innerHTML=cats.map(c=>`<button class="filter ${c===category?"active":""}" onclick="category='${c}';renderFilters();renderProducts()">${c}</button>`).join("")}
+function renderProducts(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const shown=items.filter(x=>(category==="Sve"||x.category===category)&&(x.name.toLowerCase().includes(q)||x.desc.toLowerCase().includes(q)));
+ document.getElementById("products").innerHTML=shown.length?shown.map(x=>`<article class="product"><div class="product-img"><img src="${x.image}" alt="${x.name}"></div><div class="product-body"><div class="tag">${x.category}</div><h3>${x.name}</h3><div class="desc">${x.desc}</div><div class="price">${money(x.price)}</div><button class="add" onclick="addToCart(${x.id})">Dodaj u korpu</button></div></article>`).join(""):"<p>Nema proizvoda koji odgovaraju pretrazi.</p>";
+}
+function addToCart(id){cart[id]=(cart[id]||0)+1;updateCart()}
+function updateCart(){
+ const count=Object.values(cart).reduce((a,b)=>a+b,0);document.getElementById("cartCount").textContent=count;
+ const entries=Object.entries(cart).filter(([id,n])=>n>0);
+ document.getElementById("cartItems").innerHTML=entries.length?entries.map(([id,n])=>{let x=items.find(p=>p.id==id);return `<div class="cart-row"><div><b>${x.name}</b><br><small>${money(x.price)} × ${n}</small></div><div class="qty"><button onclick="changeQty(${id},-1)">−</button> ${n} <button onclick="changeQty(${id},1)">+</button></div></div>`}).join(""):"<p>Korpa je trenutno prazna.</p>";
+ const total=entries.reduce((sum,[id,n])=>sum+items.find(p=>p.id==id).price*n,0);document.getElementById("total").textContent="Ukupno: "+money(total);
+}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];updateCart()}
+function openCart(){updateCart();document.getElementById("overlay").style.display="flex"}
+function closeCart(){document.getElementById("overlay").style.display="none"}
+function demoOrder(){if(!Object.keys(cart).length){alert("Prvo dodaj neki proizvod u korpu.");return}alert("Uspešno si isprobao demo naručivanje! Ovo nije prava porudžbina.");cart={};updateCart();closeCart()}
+renderFilters();renderProducts();updateCart();
+</script>
+</body>
+</html>
